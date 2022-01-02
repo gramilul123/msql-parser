@@ -1,0 +1,9 @@
+db:
+  DB_HOST: "localhost"
+  DB_NAME: "db"
+  DB_USER: "user"
+  DB_PASS: "pass"
+  DB_PORT: "3306"
+conditions:
+  table_name: "id = 1 OR id = 2"
+  table_two: "id = 1 OR id = 2"
