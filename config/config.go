@@ -34,8 +34,11 @@ type Db struct {
 }
 
 type Config struct {
-	Db     *Db               `yaml:"db"`
-	Tables map[string]string `yaml:"conditions"`
+	Db            *Db               `yaml:"db"`
+	Tables        map[string]string `yaml:"conditions"`
+	InternalCount int               `yaml:"internal_count"`
+	ExternalCount int               `yaml:"external_count"`
+	Command       string            `yaml:"command"`
 }
 
 func New() *Config {
@@ -46,28 +49,19 @@ func New() *Config {
 		log.Fatalf(err.Error())
 	}
 
-	GlCfg := &Config{
-		Db: &Db{
-			Host:     config.Db.Host,
-			Port:     config.Db.Port,
-			User:     config.Db.User,
-			Password: config.Db.Password,
-			Name:     config.Db.Name,
-			Params: map[string]string{
-				"sql_mode": "'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO," +
-					"NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'",
-			},
-			Collation:            "utf8_general_ci",
-			AllowNativePasswords: true,
-			MaxOpenConnections:   DB_MAX_OPEN_CONNS,
-			MaxIdleConnections:   DB_MAX_IDLE_CONNS,
-			MaxLifetime:          DB_MAX_LIFETIME,
-			MaxIdleLifetime:      DB_MAX_IDLE_LIFETIME,
-			MaxPingTimeout:       DB_MAX_PING,
-		},
+	config.Db.Params = map[string]string{
+		"sql_mode": "'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO," +
+			"NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'",
 	}
+	config.Db.Collation = "utf8_general_ci"
+	config.Db.AllowNativePasswords = true
+	config.Db.MaxOpenConnections = DB_MAX_OPEN_CONNS
+	config.Db.MaxIdleConnections = DB_MAX_IDLE_CONNS
+	config.Db.MaxLifetime = DB_MAX_LIFETIME
+	config.Db.MaxIdleLifetime = DB_MAX_IDLE_LIFETIME
+	config.Db.MaxPingTimeout = DB_MAX_PING
 
-	return GlCfg
+	return config
 }
 
 func (c *Config) Parse(data []byte) error {
