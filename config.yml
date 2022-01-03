@@ -7,3 +7,6 @@ db:
 conditions:
   table_name: "id = 1 OR id = 2"
   table_two: "id = 1 OR id = 2"
+internal_count: 10
+external_count: 10
+command: ""
