@@ -9,4 +9,4 @@ conditions:
   table_two: "id = 1 OR id = 2"
 internal_count: 10
 external_count: 10
-command: 'mysqldump -u db_user -p db_password -h db_host db_name --tables table_name --where="" > file_name.sql --skip_add_locks --skip-lock-tables'
+command: 'mysqldump -u [db_user] -p [db_password] -h [db_host] [db_name] --tables [table_name] --where="[select_where]" --skip_add_locks --skip-lock-tables'
