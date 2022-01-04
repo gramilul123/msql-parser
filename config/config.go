@@ -35,7 +35,7 @@ type Db struct {
 
 type Config struct {
 	Db            *Db               `yaml:"db"`
-	Tables        map[string]string `yaml:"conditions"`
+	Tables        map[string]string `yaml:"tables"`
 	InternalCount int               `yaml:"internal_count"`
 	ExternalCount int               `yaml:"external_count"`
 	Command       string            `yaml:"command"`
